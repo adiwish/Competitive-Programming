@@ -93,6 +93,7 @@ int power(int a,int b){
     while(b--)
         temp*=a;
     return temp;
+    //no
 }
 
 void code(){
