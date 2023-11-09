@@ -95,83 +95,10 @@ int power(int a,int b){
     return temp;
 }
 
-bool dfs(int node,int par,vector<vector<int>> adj,vi &v,map<int,bool> &vis){
-    vis[node]=true;
-    v.pb(node);
-    for(auto it:adj[node]){
-        if(!vis[it]){
-            if(dfs(it,node,adj,v,vis)) return true;
-        }
-        else if(it!=par){
-            v.pb(it); return true;
-        }
-    }
-    v.pop_back();
-    return false;
-}
-pair<int,int> dist(int n,vector<vector<int>> adj,map<int,bool> &vis,set<int>& st){
-    int ans=0;
-    queue<int> q; q.push(n);
-    while(!q.empty()){
-        int s=q.size();
-        while(s--){
-            int node=q.front(); q.pop();
-            vis[node]=true;
-            if(st.find(node)!=st.end()) ret {ans,node};
-            for(auto it:adj[node])
-                if(!vis[it]) q.push(it);
-        }
-        ans++;
-    }
-    return {-1LL,-1LL};
-    
-}
-int distance(int n,vector<vector<int>>& adj,map<int,bool>& vis,set<int>& st,int target){
-    int ans=0;
-    queue<int> q; q.push(n);
-    while(!q.empty()){
-        int s=q.size();
-        while(s--){
-            int node=q.front(); q.pop();
-            vis[node]=true;
-            if(st.find(node)!=st.end()) ret ans;
-            for(auto it:adj[node])
-                if(!vis[it]) q.push(it);
-        }
-        ans++;
-    }
-    return -1LL;
-    
-}
 void code(){
-    int n,a,b; cin>>n>>a>>b;
-    vector<vector<int>> adj(n+1);
-    f(i,0,n){
-        int u,v; cin>>u>>v;
-        adj[u].pb(v);
-        adj[v].pb(u);  
-    }
-    vi v;
-    set<int> st;
-    map<int,bool> vis;
-    int flag=dfs(1,-1LL,adj,v,vis);
-    vis.clear();
-    
-    while(v.size()!=0&&st.find(v.back())==st.end()){
-        st.insert(v.back());
-        v.pop_back();
-    }
-    
-    if(a==b||st.size()==0){ cout<<"NO"; ret;}
-    
-    pair<int,int> bdist=dist(b,adj,vis,st);
-    vis.clear();
-    int adist=distance(a,adj,vis,st,bdist.second); 
-    // cout<<" a-"<<adist<<"  b-"<<bdist<<endl;
-    if(bdist.first==0||bdist.first<adist) cout<<"YES";
-    else cout<<"NO";
 
-    
+
+
 }
 
 int32_t main(){

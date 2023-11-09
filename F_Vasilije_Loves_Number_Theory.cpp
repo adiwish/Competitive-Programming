@@ -94,84 +94,58 @@ int power(int a,int b){
         temp*=a;
     return temp;
 }
-
-bool dfs(int node,int par,vector<vector<int>> adj,vi &v,map<int,bool> &vis){
-    vis[node]=true;
-    v.pb(node);
-    for(auto it:adj[node]){
-        if(!vis[it]){
-            if(dfs(it,node,adj,v,vis)) return true;
+void storefactors(map<int,int>& factors,int n){
+    int i=2;
+    while(n>1&&i*i<=n){
+        while(n%i==0){
+            factors[i]++;
+            n/=i;
         }
-        else if(it!=par){
-            v.pb(it); return true;
-        }
+        i++;
     }
-    v.pop_back();
-    return false;
+    if(n!=1) factors[n]++;
 }
-pair<int,int> dist(int n,vector<vector<int>> adj,map<int,bool> &vis,set<int>& st){
-    int ans=0;
-    queue<int> q; q.push(n);
-    while(!q.empty()){
-        int s=q.size();
-        while(s--){
-            int node=q.front(); q.pop();
-            vis[node]=true;
-            if(st.find(node)!=st.end()) ret {ans,node};
-            for(auto it:adj[node])
-                if(!vis[it]) q.push(it);
-        }
-        ans++;
+int totalfactores(map<int,int>& newfactors){
+    int ans=1;
+    for(auto it:newfactors){
+        ans*=it.second+1;
     }
-    return {-1LL,-1LL};
     
-}
-int distance(int n,vector<vector<int>>& adj,map<int,bool>& vis,set<int>& st,int target){
-    int ans=0;
-    queue<int> q; q.push(n);
-    while(!q.empty()){
-        int s=q.size();
-        while(s--){
-            int node=q.front(); q.pop();
-            vis[node]=true;
-            if(st.find(node)!=st.end()) ret ans;
-            for(auto it:adj[node])
-                if(!vis[it]) q.push(it);
-        }
-        ans++;
-    }
-    return -1LL;
-    
+    return ans;
 }
 void code(){
-    int n,a,b; cin>>n>>a>>b;
-    vector<vector<int>> adj(n+1);
-    f(i,0,n){
-        int u,v; cin>>u>>v;
-        adj[u].pb(v);
-        adj[v].pb(u);  
+    int n,q; cin>>n>>q;
+    map<int,int> factors;
+    storefactors(factors,n);
+    int temp=n;
+    map<int,int> newfactors;
+    newfactors.insert(factors.begin(),factors.end());
+    while(q--){
+        int type; cin>>type;
+        if(type==2){
+            temp=n; newfactors.clear();
+            newfactors.insert(factors.begin(),factors.end());
+            // cout<<endl;
+            continue;
+        }
+        int x; cin>>x; 
+        storefactors(newfactors,x);
+        // cout<<"x is: "<<x<<endl;
+        // for(auto it:newfactors){
+        //     cout<<it.first<<" "<<it.second<<endl;
+        // }
+        int multiply=totalfactores(newfactors);
+        map<int,int> mp;
+        storefactors(mp,multiply);
+        bool ans=true;
+        for(auto it:mp)
+            if(it.second>newfactors[it.first]){
+                ans=false; break;
+            }
+        if(ans) cout<<"YES"<<endl;
+        else cout<<"NO"<<endl;
     }
-    vi v;
-    set<int> st;
-    map<int,bool> vis;
-    int flag=dfs(1,-1LL,adj,v,vis);
-    vis.clear();
-    
-    while(v.size()!=0&&st.find(v.back())==st.end()){
-        st.insert(v.back());
-        v.pop_back();
-    }
-    
-    if(a==b||st.size()==0){ cout<<"NO"; ret;}
-    
-    pair<int,int> bdist=dist(b,adj,vis,st);
-    vis.clear();
-    int adist=distance(a,adj,vis,st,bdist.second); 
-    // cout<<" a-"<<adist<<"  b-"<<bdist<<endl;
-    if(bdist.first==0||bdist.first<adist) cout<<"YES";
-    else cout<<"NO";
 
-    
 }
 
 int32_t main(){
