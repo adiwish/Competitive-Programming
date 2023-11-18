@@ -96,33 +96,23 @@ int power(int a,int b){
 }
 
 void code(){
-    int n,w; cin>>n>>w;
-    vi wt(n),v(n);
-    f(i,0,n){
-        cin>>wt[i]>>v[i];
-    }
-    int vmax=accumulate(vr(v),0LL);
-    // cout<<vmax<<endl;
-    vector<vector<int>> dp(n,vector<int>(vmax+1,INT_MAX));
-    f(i,0,n) dp[i][v[i]]=wt[i];
+    int n,q; cin>>n>>q;
+    vi v(q); cin>>v;
     f(i,1,n){
-        f(j,0,vmax+1){
-            dp[i][j]=min(dp[i][j],dp[i-1][j]);
-            if(j-v[i]<0) continue;
-            dp[i][j]=min(dp[i-1][j],dp[i-1][j-v[i]]+wt[i]);
+        cout<<i<<" "<<i+1<<endl;
+    }
+    int last=n-1;
+    f(i,0,q){
+        if(v[i]==last){
+            cout<<"-1 -1 -1";
         }
+        else{
+            cout<<n<<" "<<last<<" "<<v[i];
+            last=v[i];
+
+        }
+        cout<<endl;
     }
-    int ans=INT_MAX;
-    // f(i,0,n){
-    //     cout<<dp[i]<<endl;
-    // }
-    fr(j,vmax,0){
-        f(i,0,n) 
-            if(dp[i][j]<=w){
-                cout<<j; ret;
-            }
-    }
-    // cout<<dp[1][30];
 
 }
 
@@ -133,9 +123,9 @@ int32_t main(){
     //#endif
     adiwish
 
-    // int t; cin>>t;
-    // while(t--){
+    int t; cin>>t;
+    while(t--){
         code();
-    //     cout<<endl;
-    // }
+        // cout<<endl;
+    }
 }

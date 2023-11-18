@@ -7,7 +7,7 @@ using namespace std;
 #define vi vector<int>
 #define vvi vector<vector<int>>
 #define vc vector<char>
-#define mi unordered_map<int,int> 
+#define mi map<int,int> 
 #define mc unordered_map<char,char>
 #define mic unordered_map<int,char>
 #define mci unordered_map<char,int>
