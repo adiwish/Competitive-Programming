@@ -96,43 +96,29 @@ int power(int a,int b){
 }
 
 void code(){
-    int n,w; cin>>n>>w;
-    vi wt(n),v(n);
-    f(i,0,n){
-        cin>>wt[i]>>v[i];
-    }
-    int vmax=accumulate(vr(v),0LL);
-    // cout<<vmax<<endl;
-    vector<vector<int>> dp(n,vector<int>(vmax+1,INT_MAX));
-    f(i,0,n) dp[i][v[i]]=wt[i];
-    f(i,1,n){
-        f(j,0,vmax+1){
-            dp[i][j]=min(dp[i][j],dp[i-1][j]);
-            if(j-v[i]<0) continue;
-            dp[i][j]=min({dp[i][j],dp[i-1][j],dp[i-1][j-v[i]]+wt[i]});
+    int n,m; cin>>n>>m;
+    vector<vector<char>> grid(n+1,vector<char>(m+1));
+    f(i,1,n+1)
+        f(j,1,m+1) cin>>grid[i][j];
+    vector<vector<int>> dp(n+1,vector<int>(m+1,0));
+    for(int j=0;j<m+1&&grid[1][j]!='#';j++) dp[1][j]=1;
+
+    f(i,2,n+1){
+        f(j,1,m+1){
+            if(grid[i][j]=='#') continue;
+            dp[i][j]=modulo(dp[i-1][j]+dp[i][j-1]);
         }
     }
-    int ans=INT_MAX;
-    // f(i,0,vmax+1) cout<<i<<" ";
-    // cout<<endl;
-    // f(i,0,n){
-    //     cout<<dp[i]<<endl;
-    // }
-    fr(j,vmax,0){
-        f(i,0,n) 
-            if(dp[i][j]<=w){
-                cout<<j; ret;
-            }
-    }
-    // cout<<dp[1][30];
+    cout<<dp[n][m];
+
 
 }
 
 int32_t main(){
-    // #ifndef ONLINE_JUDGE
-    //     freopen("input.txt", "r", stdin);
-    //     freopen("output.txt", "w", stdout);
-    // #endif
+    //#ifndef ONLINE_JUDGE
+        //freopen("input.txt", "r", stdin);
+        //freopen("output.txt", "w", stdout);
+    //#endif
     adiwish
 
     // int t; cin>>t;
