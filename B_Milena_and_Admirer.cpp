@@ -104,14 +104,12 @@ void code(){
             last=v[i]; continue;
         }
         else{
-            if(v[i]%last==0)
-                ans+=(v[i]/last)-1;
-            else{
-                ans+=(v[i]-(last+(v[i]%last)))/last;
-                ans++;
-                last=(last+v[i]%last)/2;
+            int q=v[i]/last;
+            if(v[i]%last==0){
+                ans+=q-1; continue;
             }
-            
+            ans+=q;
+            last=v[i]/(q+1);
         }
     }
     cout<<ans;
