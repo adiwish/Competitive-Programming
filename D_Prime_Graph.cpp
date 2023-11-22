@@ -98,17 +98,21 @@ int power(int a,int b){
 void code(){
     int n; cin>>n;
     int sum=n;
-    if(n<=3){
+    if(n<3){
         cout<<-1; ret;
     }
-    cout<<1<<" "<<n<<endl;
+    vector<pair<int,int>> ans;
+    ans.pb({1,n});
     f(i,1,n)
-        cout<<i<<" "<<i+1<<endl;
-    int left=2,right=n-1;
+        ans.pb({i,i+1});
+    int left=2,right=n;
     while(!isPrime(sum)){
-        cout<<left<<" "<<right<<endl;
+        ans.pb({left,right});
+        left++; right--;
         sum++;
     }
+    cout<<ans.size()<<endl;
+    f(i,0,ans.size()) cout<<ans[i].first<<" "<<ans[i].second<<endl;
     ret;
 
 }
