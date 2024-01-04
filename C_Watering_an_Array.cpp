@@ -98,14 +98,20 @@ int power(int a,int b){
 void code(){
     int n,k,d; cin>>n>>k>>d;
     vi v(n); cin>>v;
-    int ans=0;
+    vi b(k); cin>>k;
+    int ans=0,cnt=0;
     
-    for(int j=0;j<k&&j<n;j++){
-        int cnt=0;
-        f(i,0,n){
-            
+    
+    for(int j=0;j<d&&j<n;j++){
+        cnt=0;
+        f(i,0,b[j]){
+            v[i]++;
+            if(v[i]==i+1) cnt++;
         }
+        int currans=cnt+(d-(j+1))/2;
+        ans=max(ans,currans);
     }
+    cout<<ans;
     
 
 }
