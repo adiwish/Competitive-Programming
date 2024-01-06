@@ -96,7 +96,16 @@ int power(int a,int b){
 }
 
 void code(){
-    
+    int a,b; cin>>a>>b;
+    if(a>b) swap(a,b);
+    if(a==1){
+        cout<<b*b; ret;
+    }
+    int comm=gcd(a,b);
+    int ans=(b*a)/comm;
+    // cout<<ans;
+    if(comm!=a) cout<<ans;
+    else cout<<(b/a)*b;
 
 }
 
