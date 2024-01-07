@@ -96,19 +96,10 @@ int power(int a,int b){
 }
 
 void code(){
-    int n; cin>>n;
-    vi v(n); cin>>v;
-    int sum=v[0],odd=0,even=0;
-    cout<<sum<<" ";
-    v[0]%2==0?even++:odd++;
-    f(i,1,n){
-        sum+=v[i];
-        if(v[i]&1) odd++;
-        else even++;
-        int diff=odd/3;
-        if(odd%3==1) diff++;
-        cout<<sum-diff<<" ";
-    }
+    int a,b; cin>>a>>b;
+    a+=b;
+    if(a%2==0) cout<<"Bob";
+    else cout<<"Alice";
 
 }
 

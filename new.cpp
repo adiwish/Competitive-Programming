@@ -94,21 +94,67 @@ int power(int a,int b){
         temp*=a;
     return temp;
 }
+bool dfs(int start, int end, vector<int>& path, unordered_map<int, bool>& visited,vector<vector<int>>& adj) {
+        visited[start] = true;
+        path.push_back(start);
 
+        if (start == end) {
+            return true;
+        }
+
+        for (int neighbor : adj[start]) {
+            if (!visited[neighbor]) {
+                if (dfs(neighbor, end, path, visited,vector<vector<int>>& adj)) {
+                    return true;
+                }
+            }
+        }
+
+        path.pop_back();
+        return false;
+}
+vector<int> findPath(int start, int end,vector<vector<int>>& adj) {
+        vector<int> path;
+        unordered_map<int, bool> visited;
+
+        if (dfs(start, end, path, visited)) {
+            return path;
+        } else {
+            // No path found
+            return vector<int>();
+        }
+}
 void code(){
     int n; cin>>n;
-    vi v(n); cin>>v;
-    int sum=v[0],odd=0,even=0;
-    cout<<sum<<" ";
-    v[0]%2==0?even++:odd++;
-    f(i,1,n){
-        sum+=v[i];
-        if(v[i]&1) odd++;
-        else even++;
-        int diff=odd/3;
-        if(odd%3==1) diff++;
-        cout<<sum-diff<<" ";
+    vector<vector<int>> adj(n);
+    vector<vector<int>> si(n,vector<int>(n,0));
+    vector<vector<int>> pa(n,vector<int>(n,0));
+    vector<vector<int>> ans(n,vector<int>(n,0));
+    f(i,0,n-1){
+        int x,y,s,p; cin>>x>>y>>s>>p;
+        x--; y--;
+        adj[x].pb(y); adj[y].pb(x);
+        si[x][y]=s; si[y][x]=s;
+        pa[x][y]=p; pa[y][x]=p;
+        
     }
+    for(int i=1;i<n;i++){
+        vector<int> path=findPath(i-1,i,adj);
+        for(int j=1;j<=path.size();j++){
+            int a=path[j-1],b=path[j];
+            if(a>b) swap(a,b);
+            ans[a][b]=si[a][b];
+        }
+    }
+    int finans=0;
+    f(i,0,n){
+        f(j,0,n){
+            if(ans[i][j]!=0) finans+=min(ans[i][j],pa[i][j]);
+        }
+    }
+    cout<<finans;
+
+
 
 }
 
@@ -119,9 +165,8 @@ int32_t main(){
     //#endif
     adiwish
 
-    int t; cin>>t;
-    while(t--){
+    // int t=1;
+    // while(t--){
         code();
-        cout<<endl;
-    }
+    // }
 }

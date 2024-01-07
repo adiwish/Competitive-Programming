@@ -3,6 +3,7 @@
         "future": "cpp",
         "system_error": "cpp",
         "regex": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "vector": "cpp"
     }
 }
