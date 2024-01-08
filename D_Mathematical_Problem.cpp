@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 #include <iostream>
 using namespace std;
-// #define int long long
+#define int long long
 #define AdityaBarnwal 1
 #define sg string
 #define vi vector<int>
@@ -94,72 +94,11 @@ int power(int a,int b){
         temp*=a;
     return temp;
 }
-bool dfs(int start, int end, vector<int>& path, unordered_map<int, bool>& visited,vector<vector<int>>& adj) {
-        visited[start] = true;
-        path.push_back(start);
 
-        if (start == end) {
-            return true;
-        }
-
-        for (int neighbor : adj[start]) {
-            if (!visited[neighbor]) {
-                if (dfs(neighbor, end, path, visited,adj)) {
-                    return true;
-                }
-            }
-        }
-
-        path.pop_back();
-        return false;
-}
-vector<int> findPath(int start, int end,vector<vector<int>>& adj) {
-        vector<int> path;
-        unordered_map<int, bool> visited;
-
-        if (dfs(start, end, path, visited,adj)) {
-            return path;
-        } else {
-            // No path found
-            return vector<int>();
-        }
-}
 void code(){
     int n; cin>>n;
-    vector<vector<int>> adj(n);
-    vector<vector<int>> si(n,vector<int>(n,0));
-    vector<vector<int>> pa(n,vector<int>(n,0));
-    vector<vector<int>> ans(n,vector<int>(n,0));
-    f(i,0,n-1){
-        int x,y,s,p; cin>>x>>y>>s>>p;
-        x--; y--;
-        adj[x].pb(y); adj[y].pb(x);
-        si[x][y]=s; si[y][x]=s;
-        pa[x][y]=p; pa[y][x]=p;
-        
-    }
-    // vi temp=findPath(0,1,adj);
-    // cout<<temp<<endl;
-    for(int i=1;i<n;i++){
-        vector<int> path=findPath(i-1,i,adj);
-        // cout<<path<<endl;
-        for(int j=1;j<path.size();j++){
-            int a=path[j-1],b=path[j];
-            if(a>b) swap(a,b);
-            // cout<<a<<" "<<b<<"  ,";
-            ans[a][b]+=si[a][b];
-        }
-        // cout<<endl;
-    }
-    int finans=0;
-    f(i,0,n){
-        f(j,0,n){
-            if(ans[i][j]!=0) finans+=min(ans[i][j],pa[i][j]);
-        }
-    }
-    cout<<finans;
 
-
+    vi v(n); cin>>v;
 
 }
 
@@ -170,8 +109,9 @@ int32_t main(){
     //#endif
     adiwish
 
-    // int t=1;
-    // while(t--){
+    int t; cin>>t;
+    while(t--){
         code();
-    // }
+        cout<<endl;
+    }
 }
