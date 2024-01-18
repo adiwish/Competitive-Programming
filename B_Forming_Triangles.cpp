@@ -94,12 +94,25 @@ int power(int a,int b){
         temp*=a;
     return temp;
 }
+
 void code(){
-    int n,l,k; cin>>n>>l>>k;
-    
-
-    
-
+    int n; cin>>n;
+    vi v(n+1,0);
+    f(i,0,n){
+        int x; cin>>x;
+        v[x]++;
+    }
+    int left=0;
+    int ans=0;
+    f(i,0,n+1){
+        if(v[i]==0) continue;
+        if(v[i]>=3){
+            ans+=(v[i]*(v[i]-1)*(v[i]-2))/6;
+        }
+        if(v[i]>=2) ans+=left*((v[i]*(v[i]-1))/2);
+        left+=v[i];
+    }
+    cout<<ans;
 
 }
 
@@ -110,9 +123,9 @@ int32_t main(){
     //#endif
     adiwish
 
-    // int t; cin>>t;
-    // while(t--){
+    int t; cin>>t;
+    while(t--){
         code();
-    //     cout<<endl;
-    // }
+        cout<<endl;
+    }
 }

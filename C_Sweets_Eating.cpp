@@ -94,12 +94,9 @@ int power(int a,int b){
         temp*=a;
     return temp;
 }
+
 void code(){
-    int n,l,k; cin>>n>>l>>k;
-    
-
-    
-
+    int n,m; cin>>n>>m;
 
 }
 
@@ -110,9 +107,9 @@ int32_t main(){
     //#endif
     adiwish
 
-    // int t; cin>>t;
-    // while(t--){
+    int t; cin>>t;
+    while(t--){
         code();
-    //     cout<<endl;
-    // }
+        cout<<endl;
+    }
 }

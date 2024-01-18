@@ -1,17 +1,19 @@
 #include<bits/stdc++.h>
-#include <iostream>
 using namespace std;
-
+int N_to_Zero(int N){
+   int count = 0;
+   int i = 2;
+   while((i * i) <= N && N%i!=0){
+      i++;
+   }
+   if((i * i) > N){
+      i = N;
+   }
+   count = 1 + (N-i)/2;
+   return count;
+}
 int main(){
-    int n; cin>>n;
-    int a[101]={0};
-    for(int i=0;i<n;i++){
-        int x; cin>>x;
-        a[x]++;
-    }
-    int ans=0;
-    for(int i=1;i<=100;i++){
-        ans+=(a[i]*(a[i]-1))/2;
-    }
-    cout<<ans;
+   int n; cin>>n;
+   cout<<N_to_Zero(n);
+   return 0;
 }

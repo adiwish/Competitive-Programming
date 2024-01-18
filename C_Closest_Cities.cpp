@@ -94,12 +94,39 @@ int power(int a,int b){
         temp*=a;
     return temp;
 }
+
 void code(){
-    int n,l,k; cin>>n>>l>>k;
-    
-
-    
-
+    int n; cin>>n;
+    vi v(n); cin>>v;
+    vi left(n,0);
+    vi right(n,0);
+    f(i,1,n-1){
+        if(v[i]-v[i-1]<v[i+1]-v[i]) left[i]=1+left[i-1];
+    }
+    fr(i,n-2,1){
+        if(v[i]-v[i-1]>v[i+1]-v[i]) right[i]=1+right[i+1];
+    }
+    left[n-1]=1+left[n-2];
+    right[0]=1+right[1];
+    // cout<<left<<endl<<right<<endl;
+    int m; cin>>m;
+    while(m--){
+        int x,y; cin>>x>>y; x--; y--;
+        if(x<y){
+            if(right[x]>=y-x){
+                cout<<y-x<<endl; continue;
+            }
+            int ans=right[x]+v[y]-v[x+right[x]];
+            cout<<ans<<endl;
+        }
+        else{
+            if(left[x]>=x-y){
+                cout<<x-y<<endl; continue;
+            }
+            int ans=left[x]+v[x-left[x]]-v[y];
+            cout<<ans<<endl;
+        }
+    }
 
 }
 
@@ -110,9 +137,9 @@ int32_t main(){
     //#endif
     adiwish
 
-    // int t; cin>>t;
-    // while(t--){
+    int t; cin>>t;
+    while(t--){
         code();
-    //     cout<<endl;
-    // }
+        // cout<<endl;
+    }
 }
