@@ -97,30 +97,36 @@ int power(int a,int b){
 
 void code(){
     int n; cin>>n;
-    vi v(n); cin>>v;
-    vi left(n,0);
-    vi right(n,0);
-    f(i,1,n-1){
-        if(v[i]-v[i-1]<v[i+1]-v[i]) left[i]=1+left[i-1];
-        else left[i]=left[i-1]+v[i]-v[i-1];
-    }
-    fr(i,n-2,1){
-        if(v[i]-v[i-1]>v[i+1]-v[i]) right[i]=1+right[i+1];
-        else right[i]=right[i+1]+v[i+1]-v[i];
-    }
-    left[n-1]=1+left[n-2];
-    right[0]=1+right[1];
-    // cout<<left<<endl<<right<<endl;
-    int m; cin>>m;
-    while(m--){
-        int x,y; cin>>x>>y; x--; y--;
-        if(x<y){
-            cout<<right[x]-right[y]<<endl;
+    n--;
+    int last=300;
+    vi ans;
+    while(n>0){
+        f(i,1,70){
+            int temp=power(2,i)-1;
+            if(temp>n){
+                int len=i-1;
+                temp=power(2,len)-1;
+                // int mul=n/temp; mul--;
+                int start=last-len+1;
+                // cout<<"n= "<<n<<"  temp= "<<temp<<"  n-temp= "<<n-temp<<"  len= "<<len<<endl;
+                while(start<=last){
+                    // cout<<start<<" ";
+                    ans.pb(start); 
+                    start++;
+                }
+                // cout<<endl;
+                last=last-len;
+                n-=temp;
+                break;
+            }
         }
-        else{
-            cout<<left[x]-left[y]<<endl;
-        }
     }
+    if(ans.size()>200){
+        cout<<-1<<endl;
+        ret;
+    }
+    cout<<ans.size()<<endl;
+    cout<<ans;
 
 }
 
@@ -134,6 +140,6 @@ int32_t main(){
     int t; cin>>t;
     while(t--){
         code();
-        // cout<<endl;
+        cout<<endl;
     }
 }
