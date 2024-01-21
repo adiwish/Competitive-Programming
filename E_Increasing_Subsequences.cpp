@@ -97,36 +97,17 @@ int power(int a,int b){
 
 void code(){
     int n; cin>>n;
-    n--;
-    int last=300;
+    sg s=decToBinary(n);
+    reverse(s.begin(),s.end());
     vi ans;
-    while(n>0){
-        f(i,1,70){
-            int temp=power(2,i)-1;
-            if(temp>n){
-                int len=i-1;
-                temp=power(2,len)-1;
-                // int mul=n/temp; mul--;
-                int start=last-len+1;
-                // cout<<"n= "<<n<<"  temp= "<<temp<<"  n-temp= "<<n-temp<<"  len= "<<len<<endl;
-                while(start<=last){
-                    // cout<<start<<" ";
-                    ans.pb(start); 
-                    start++;
-                }
-                // cout<<endl;
-                last=last-len;
-                n-=temp;
-                break;
-            }
-        }
-    }
-    if(ans.size()>200){
-        cout<<-1<<endl;
-        ret;
+    n=s.size();
+    f(i,1,n) ans.pb(i);
+    fr(i,n-2,0){
+        if(s[i]=='1') ans.pb(i+1);
     }
     cout<<ans.size()<<endl;
     cout<<ans;
+
 
 }
 
