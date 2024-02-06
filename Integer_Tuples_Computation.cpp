@@ -107,14 +107,10 @@ void preprocess(){
             ptr+=i;
         }
     }
-    // for(int i=0;i<50;i++) cout<<a[i]<<" ";
-    // cout<<endl;
     for(int i=2;i<maxm;i++) 
         a[i]+=a[i-1];
     for(int i=2;i<maxm;i++) 
         a[i]+=a[i-1];
-    // for(int i=0;i<50;i++) cout<<a[i]<<" ";
-    // cout<<endl;
 }
 void code(){
     int l,r; cin>>l>>r;
