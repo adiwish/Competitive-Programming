@@ -95,18 +95,32 @@ int power(int a,int b){
     return temp;
 }
 
-int right=1000000;
+int maxm=1000000;
 int a[1000000]={0};
 void preprocess(){
-
+    for(int i=1;i*i<=maxm;i++){
+        int ptr=i*i;
+        a[ptr]++;
+        ptr+=i;
+        while(ptr<=maxm){
+            a[ptr]+=2;
+            ptr+=i;
+        }
+    }
+    // for(int i=0;i<50;i++) cout<<a[i]<<" ";
+    // cout<<endl;
+    for(int i=2;i<maxm;i++) 
+        a[i]+=a[i-1];
+    for(int i=2;i<maxm;i++) 
+        a[i]+=a[i-1];
+    // for(int i=0;i<50;i++) cout<<a[i]<<" ";
+    // cout<<endl;
 }
 void code(){
     int l,r; cin>>l>>r;
-    vector<int> a(r,0);
+    int ans=a[r-1];
+    if(l!=1) ans-=a[l-2];
     
-    int ans=0;
-    for(int i=l-1;i<r;i++) ans+=a[i];
-    // cout<<a<<" ";
     cout<<ans;
 
 }
@@ -119,6 +133,7 @@ int32_t main(){
     adiwish
 
     int t; cin>>t;
+    preprocess();
     while(t--){
         code();
         cout<<endl;
