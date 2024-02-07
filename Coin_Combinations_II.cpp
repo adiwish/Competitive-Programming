@@ -98,19 +98,14 @@ int power(int a,int b){
 void code(){
     int n,sum; cin>>n>>sum;
     vi v(n); cin>>v;
-    sort(vr(v));
-
-    vi ans(sum+1,0); ans[0]=1;
-    for(int i=0;i<n;i++){
-        int way=0;
-        for(int j=0;j<=sum;j++){
-            int in=j-v[i];
-            if(in<0) continue;
-            ans[j]=modulo(ans[j]+ans[in]);
+    vi dp(sum+1,0); dp[0]=1;
+    for(int i=0;i<n;i++)
+        for(int j=1;j<=sum;j++){
+            if(j-v[i]<0) continue;
+            dp[j]+=dp[j-v[i]];
+            dp[j]=modulo(dp[j]);
         }
-    }
-    // cout<<ans<<endl;
-    cout<<ans[sum];
+    cout<<dp[sum];
 
 }
 
