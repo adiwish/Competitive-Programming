@@ -94,87 +94,24 @@ int power(int a,int b){
         temp*=a;
     return temp;
 }
-int leftSolve(int i,vi& v,vi& left,vi& suff){
-    int n=v.size();
 
-    if(i==0) return INT_MAX;
-    if(v[i-1]>v[i]) return 1;
-
-    int idx=left[i-1];
-    if(idx==-1) return INT_MAX;
-
-    int l=0,h=idx;
-    while(l<=h){
-        int mid=(l+h)/2;
-        if(suff[mid]-suff[i]<v[i]) h=mid-1;
-        else if(suff[mid]-suff[i]>v[i]&&((suff[mid+1]-suff[i]<=v[i])||mid==idx)) return i-mid;
-        else l=mid+1;
-    }
-    
-    return INT_MAX;
-
-}
-int rightSolve(int i,vi& v,vi& right,vi& pre){
-    int n=v.size();
-
-    if(i==n-1) return INT_MAX;
-    if(v[i+1]>v[i]) return 1;
-
-    int idx=right[i+1];
-    if(idx==n) return INT_MAX;
-    
-    int l=idx,h=n-1;
-    while(l<=h){
-        int mid=(l+h)/2;
-        if(pre[mid]-pre[i]<=v[i]) l=mid+1;
-        else if((pre[mid]-pre[i]>v[i])&&((pre[mid-1]-pre[i]<=v[i])||mid==idx)) return mid-i;
-        else h=mid-1;
-    }
-    
-    return INT_MAX;
-}
 void code(){
-    int n; cin>>n;
-    vi v(n); cin>>v;
-    ////////////////////////////////////////
-    vi pre(n),suff(n),left(n),right(n);
-    pre[0]=v[0];
-    f(i,1,n)
-        pre[i]=pre[i-1]+v[i];
-    suff[n-1]=v[n-1];
-    fr(i,n-2,0)
-        suff[i]=suff[i+1]+v[i];
-    right[n-1]=n;
-    int curr=n;
-    fr(i,n-2,0){
-        if(v[i]==v[i+1]) right[i]=curr;
-        else{
-            right[i]=i+1; curr=i+1;
-        }
-    }
-    left[0]=-1;
-    curr=-1;
-    f(i,1,n){
-        if(v[i]==v[i-1]) left[i]=curr;
-        else{
-            left[i]=i-1; curr=i-1;
-        }
-    }
-    // cout<<pre<<endl;
-    // cout<<suff<<endl;
-    // cout<<right<<endl;
-    // cout<<left<<endl;
-    // cout<<endl<<endl;
-    ////////////////////////////////
-    vi ans(n);
-    for(int i=0;i<n;i++){
-        int distl=leftSolve(i,v,left,suff),distr=rightSolve(i,v,right,pre);
-        // cout<<distl<<" "<<distr<<endl;
-        if(distl==INT_MAX&&distr==INT_MAX) ans[i]=-1;
-        else ans[i]=min(distl,distr);
-    }
-    // cout<<leftSolve(n-1,v,left,suff)<<endl;
-    cout<<ans;
+    long long n; // Use long long to accommodate larger numbers
+    cin >> n;
+    long long M = 1000000007; // Commonly used modulo value
+
+    long long ans = ((((n*n % M)*n % M)*n % M) // (n^4) % M
+                     - (6*((n*n % M)*n % M) % M) // (6*n^3) % M
+                     + (23*(n*n % M) % M)       // (23*n^2) % M
+                     - (42*n % M)               // (42*n) % M
+                     + 24) % M;                 // Adding 24 and taking modulo
+    
+    ans = (ans + M) % M; // Ensure ans is positive before division
+    ans = (ans * 250000002) % M; // Multiplicative inverse of 24 modulo M, assuming M is prime
+
+    ans = (ans + n) % M; // Adding n and taking modulo to ensure it fits within the long long range
+
+    cout << ans;
 
 }
 
