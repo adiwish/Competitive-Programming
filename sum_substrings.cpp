@@ -124,4 +124,5 @@ int32_t main(){
     }
     cout << ans << endl;
     return 0;
+    // cout<<"kuch nahi";
 }

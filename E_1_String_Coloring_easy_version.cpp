@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 #include <iostream>
 using namespace std;
-#define int long long
+// #define int long long
 #define AdityaBarnwal 1
 #define sg string
 #define vi vector<int>
@@ -94,9 +94,27 @@ int power(int a,int b){
         temp*=a;
     return temp;
 }
+bool solve(int in,string temp,string s,string ans){
+    int n=s.size();
+    if(in==s.size()){
+        if(temp<s||temp>s&&is_sorted(vr(ans))&&is_sorted(vr(temp))){
+            cout<<temp;
+            ans=temp;
+            return true;
+        }
+        return false;
+    }
+    if(solve(in+1,temp+s[in],s,ans)||solve(in+1,temp,s,ans)) return true;
+    return false;
 
+}
 void code(){
-    
+    int n; cin>>n;
+    string s; cin>>s;
+    string ans="",temp="";
+    if(solve(0,temp,s,ans)) cout<<"YES";
+    else cout<<"NO";
+
 
 }
 
@@ -107,8 +125,8 @@ int32_t main(){
     //#endif
     adiwish
 
-    int t; cin>>t;
-    while(t--)
+    // int t; cin>>t;
+    // while(t--)
     {
         code();
         cout<<endl;

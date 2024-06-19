@@ -94,9 +94,51 @@ int power(int a,int b){
         temp*=a;
     return temp;
 }
-
+typedef pair<int, int> pd;
+struct myComp {
+    constexpr bool operator()(
+        pair<int, int> const& a,
+        pair<int, int> const& b)
+        const noexcept
+    {
+        return a.second < b.second;
+    }
+};
 void code(){
-    
+    int n,m; cin>>n>>m;
+    vector<vector<pair<int,int>>> adj(n+1);
+    while(m--){
+        int a,b,s; cin>>a>>b>>s;
+        // a--; b--;
+        adj[a].push_back({b,s});
+    }
+    vector<int> v(n+1,0);
+    priority_queue<pd, vector<pd>, myComp> pq;
+    pq.push({0,1});
+    while(!pq.empty()){
+        int speed=pq.top().first;
+        int node=pq.top().second;
+        debug(speed);
+        debug(node);
+        pq.pop();
+        for(auto it:adj[node]){
+            int newnode=it.first;
+            int newspeed=it.second;
+            debug(newspeed);
+            debug(newnode);
+            if(node==1||min(speed,newspeed)>v[newnode]){
+                if(node==1){
+                    v[newnode]=newspeed;
+                    pq.push({newspeed,newnode});
+                }
+                else{
+                    v[newnode]=min(speed,newspeed);
+                    pq.push({min(speed,newspeed),newnode});
+                }
+            }
+        }
+    }
+    cout<<v[n];
 
 }
 
@@ -107,8 +149,8 @@ int32_t main(){
     //#endif
     adiwish
 
-    int t; cin>>t;
-    while(t--)
+    // int t; cin>>t;
+    // while(t--)
     {
         code();
         cout<<endl;

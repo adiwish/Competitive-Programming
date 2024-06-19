@@ -28,5 +28,6 @@
         "utility": "cpp",
         "deque": "cpp",
         "list": "cpp"
-    }
+    },
+    "C_Cpp.default.compilerPath": "C:\\MinGW\\bin\\g++.exe"
 }

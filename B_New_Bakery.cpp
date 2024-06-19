@@ -96,7 +96,7 @@ int power(int a,int b){
 }
 
 void code(){
-    
+    int n,a,b; cin>>n>>a>>b;
 
 }
 

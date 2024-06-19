@@ -96,7 +96,12 @@ int power(int a,int b){
 }
 
 void code(){
-    
+    int n; cin>>n;
+    vi v(n-1); cin>>v;
+    sort(v.rbegin(),v.rend());
+    int ans; cin>>ans;
+    ans+=v[0];
+    cout<<ans;
 
 }
 
