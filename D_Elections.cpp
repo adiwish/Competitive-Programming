@@ -94,25 +94,98 @@ int power(int a,int b){
         temp*=a;
     return temp;
 }
-
+bool check(int mid,int per,int cnt,vi& suff,vector<pair<int,int>> v){
+    int n=v.size();
+    int sum=cnt+suff[mid];
+    if(mid==per) return true;
+    if(sum>=v[mid-1].first) return true;
+    else return false;
+}
+int solve(int per,int cnt,vi& suff,vector<pair<int,int>> v){
+    int n=v.size();
+    int start=per+1,last=n;
+    while(start<=last){
+        int mid=(start+last)/2;
+        int sum=cnt+suff[mid];
+        if(check(mid,per,cnt,suff,v)&&!check(mid+1,per,cnt,suff,v)){
+            int ans=n-(mid-1);
+            // cout<<ans<<"=== ";
+            return ans;
+        }
+        else if(sum<suff[mid+1]) last=mid-1;
+        else start=mid+1;
+    }
+    return -1;
+}
 void code(){
-    int n,a,b; cin>>n>>a>>b;
-    int ans=0;
-    if(a>=b){
-        ans=n*a;
-    }
-    else{
-        int diff=(b-a)+1;
-        if(diff>=n){
-            ans=(n*((2*b)+(n-1)*(-1)))/2;
-        }
-        else{
-            ans=(diff*(b+(a)))/2;
-            ans+=(n-diff)*a;
-        }
-    }
-    cout<<ans;
+    int n,ex; cin>>n>>ex;
+    vector<pair<int,int>> v;
+    f(i,1,n+1){
+        int x; cin>>x;
+        v.push_back({x,i});
+    } 
+    sort(vr(v));
 
+    f(i,0,n) cout<<v[i].first<<" ";
+    cout<<endl;
+    f(i,0,n) cout<<v[i].second<<" ";
+    cout<<endl;
+
+    vi suff(n+2,0),pre(n+2,0);
+    for(int i=1;i<=n;i++)
+        pre[i]=pre[i-1]+v[i-1].first;
+    for(int i=n;i>0;i--)
+        suff[i]=suff[i+1]+v[i-1].first;
+    // cout<<suff<<endl;
+    map<int,int> mp;
+    // cout<<"ex - "<<ex<<endl;
+    for(int i=0;i<n;i++){
+        int per=v[i].second;
+        int vot=v[i].first;
+        // cout<<endl;
+        // cout<<"per - "<<per<<endl;
+        // cout<<"vot - "<<vot<<endl;
+        int ans=INT_MAX;
+        if(1)
+        {
+            // first case
+            int cnt=suff[per+1]+ex;
+            int anstemp=n-(i+1);
+            if(per!=1){
+                cnt+=v[0].first;
+                ans++;
+            }
+            else cnt=-1;
+            if(cnt<vot) ans=min(ans,anstemp);
+            cout<<"1. "<<ans<<endl;
+
+        }
+        if(1)
+        {
+            // second case
+            int cnt=pre[per-1]+ex+vot;
+            int anstemp=i;
+            if((per!=n&&cnt>=v[n-1].first)||per==n) ans=min(ans,anstemp);
+            cout<<"2. "<<ans<<endl;
+
+        }
+        if(1) 
+        {
+            //third case
+            int cnt=pre[per-1]+ex+vot;
+            // cout<<cnt<<" ";
+            int anstemp=i+solve(per,cnt,suff,v);
+            ans=min(ans,anstemp);
+            cout<<"3. "<<ans<<endl;
+        }
+        cout<<ans<<" ";
+        mp[per]=ans;
+
+    }
+    // for(int i=1;i<=n;i++) cout<<mp[i]<<" "; 
+    cout<<endl<<"--------------------------";
+    
+    
 
 }
 

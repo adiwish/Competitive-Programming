@@ -96,22 +96,46 @@ int power(int a,int b){
 }
 
 void code(){
-    int n,a,b; cin>>n>>a>>b;
-    int ans=0;
-    if(a>=b){
-        ans=n*a;
+    int n,k; cin>>n>>k;
+    int temp=n-1;
+    int cnt=n;
+    int sum=0;
+    vector<pair<int,int>> num;
+    while(temp>0){
+        sum+=temp;
+        num.push_back({temp,cnt});
+        cnt--;
+        temp-=2;
+    }
+    // cout<<num<<endl;
+    if(k%2==1||k/2>sum){
+        cout<<"No";
     }
     else{
-        int diff=(b-a)+1;
-        if(diff>=n){
-            ans=(n*((2*b)+(n-1)*(-1)))/2;
+        k=k/2;
+        int start=1;
+        map<int,int> mp;
+        int last=n;
+        while(last>start){
+            if(last-start>k){
+                last--;
+            }
+            else{
+                k-=(last-start);
+                
+                mp[start]=last;
+                mp[last]=start;
+                start++;
+                last--;
+            }
         }
-        else{
-            ans=(diff*(b+(a)))/2;
-            ans+=(n-diff)*a;
+        cout<<"Yes"<<endl;
+        for(int i=1;i<=n;i++){
+            if(mp.find(i)!=mp.end()) cout<<mp[i]<<" ";
+            else cout<<i<<" ";
         }
     }
-    cout<<ans;
+
 
 
 }

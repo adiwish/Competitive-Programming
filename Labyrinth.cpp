@@ -95,23 +95,104 @@ int power(int a,int b){
     return temp;
 }
 
-void code(){
-    int n,a,b; cin>>n>>a>>b;
-    int ans=0;
-    if(a>=b){
-        ans=n*a;
+void fillroute(int i,int j,vector<vector<char>>& mt,vector<vector<int>>& vis,string& ans){
+    int n=mt.size(),m=mt[0].size();
+    if(mt[i][j]=='A') return;
+    int dis=vis[i][j];
+    int r=i,c=j;
+    r=i+1;
+    if(r>=0&&r<n&&c>=0&&c<m&&vis[r][c]==dis-1){
+        ans+='U';
+        fillroute(r,c,mt,vis,ans);
+        return;
     }
-    else{
-        int diff=(b-a)+1;
-        if(diff>=n){
-            ans=(n*((2*b)+(n-1)*(-1)))/2;
+    r=i-1;
+    if(r>=0&&r<n&&c>=0&&c<m&&vis[r][c]==dis-1){
+        ans+='D';
+        fillroute(r,c,mt,vis,ans);
+        return;
+    }
+    r=i; c=j+1;
+    if(r>=0&&r<n&&c>=0&&c<m&&vis[r][c]==dis-1){
+        ans+='L';
+        fillroute(r,c,mt,vis,ans);
+        return;
+    }
+    c=j-1;
+    if(r>=0&&r<n&&c>=0&&c<m&vis[r][c]==dis-1){
+        ans+='R';
+        fillroute(r,c,mt,vis,ans);
+        return;
+    }
+    
+}
+void makeroute(int i,int j,vector<vector<char>>& mt,vector<vector<int>>& vis){
+    int n=mt.size(),m=mt[0].size();
+    queue<pair<int,int>> q;
+    q.push({i,j});
+    vis[i][j]=1;
+    bool flag=false;
+    while(!q.empty()){
+        i=q.front().first,j=q.front().second;
+        q.pop();
+        int dis=vis[i][j];
+        if(mt[i][j]=='B'){ 
+            flag=true;
+            break;
         }
-        else{
-            ans=(diff*(b+(a)))/2;
-            ans+=(n-diff)*a;
+
+        int r=i,c=j;
+        r=i+1;
+        if(r>=0&&r<n&&c>=0&&c<m&&mt[r][c]!='#'&&vis[r][c]==0){
+            vis[r][c]=dis+1;
+            q.push({r,c});
+        }
+        r=i-1;
+        if(r>=0&&r<n&&c>=0&&c<m&&mt[r][c]!='#'&&vis[r][c]==0){
+            vis[r][c]=dis+1;
+            q.push({r,c});
+        }
+        r=i; c=j+1;
+        if(r>=0&&r<n&&c>=0&&c<m&&mt[r][c]!='#'&&vis[r][c]==0){
+            vis[r][c]=dis+1;
+            q.push({r,c});
+        }
+        c=j-1;
+        if(r>=0&&r<n&&c>=0&&c<m&&mt[r][c]!='#'&&vis[r][c]==0){
+            vis[r][c]=dis+1;
+            q.push({r,c});
         }
     }
+    if(!flag){
+        cout<<"NO";
+        return;
+    }
+    // cout<<i<<" "<<j<<endl;
+    // f(i,0,n) cout<<vis[i]<<endl;
+    string ans="";
+    fillroute(i,j,mt,vis,ans);
+    reverse(vr(ans));
+    cout<<"YES"<<endl;
+    cout<<ans.size()<<endl;
     cout<<ans;
+
+}
+void code(){
+    int n,m; cin>>n>>m;
+    vector<vector<char>> mt(n,vector<char>(m));
+    f(i,0,n) cin>>mt[i];
+    vector<vector<int>> vis(n,vector<int>(m,0));
+    
+    f(i,0,n){
+        f(j,0,m){
+            if(mt[i][j]=='A'){
+                makeroute(i,j,mt,vis);
+            }
+        }
+    }
+    // cout<<endl;
+    // f(i,0,n) cout<<mt[i]<<endl;
+    
 
 
 }
@@ -123,10 +204,13 @@ int32_t main(){
     //#endif
     adiwish
 
-    int t; cin>>t;
-    while(t--)
+    // int t; cin>>t;
+    // while(t--)
     {
         code();
+        // string ans="Aditya";
+        // ans.pop_back;
+        // cout<<ans;
         cout<<endl;
     }
 }
