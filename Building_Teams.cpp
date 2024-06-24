@@ -94,76 +94,59 @@ int power(int a,int b){
         temp*=a;
     return temp;
 }
-void countP(int i,int j,vector<vector<char>>& mt,vector<vector<int>>& vis,int& cnt){
-    int n=mt.size(),m=mt[0].size();
-    // cout<<i<<" "<<j<<endl;
-    vis[i][j]=-1;
-    int r=i,c=j;
-
-    r=i+1;
-    if(r>=0&&r<n&&c>=0&&c<m&&mt[r][c]=='.'&&vis[r][c]==0)
-        countP(r,c,mt,vis,cnt);
-    else if(r>=0&&r<n&&c>=0&&c<m&&mt[r][c]=='*'&&vis[r][c]==0) cnt++;
-    
-    r=i-1;
-    if(r>=0&&r<n&&c>=0&&c<m&&mt[r][c]=='.'&&vis[r][c]==0)
-        countP(r,c,mt,vis,cnt);
-    else if(r>=0&&r<n&&c>=0&&c<m&&mt[r][c]=='*'&&vis[r][c]==0) cnt++;
-
-    r=i; c=j+1;
-    if(r>=0&&r<n&&c>=0&&c<m&&mt[r][c]=='.'&&vis[r][c]==0)
-        countP(r,c,mt,vis,cnt);
-    else if(r>=0&&r<n&&c>=0&&c<m&&mt[r][c]=='*'&&vis[r][c]==0) cnt++;
-
-    c=j-1;
-    if(r>=0&&r<n&&c>=0&&c<m&&mt[r][c]=='.'&&vis[r][c]==0)
-        countP(r,c,mt,vis,cnt);
-    else if(r>=0&&r<n&&c>=0&&c<m&&mt[r][c]=='*'&&vis[r][c]==0) cnt++;
-
-}
-void setAns(int i,int j,vector<vector<char>>& mt,vector<vector<int>>& vis,int& cnt){
-    int n=mt.size(),m=mt[0].size();
-    
-    int r=i,c=j;
-    vis[i][j]=cnt;
-    r=i+1;
-    if(r>=0&&r<n&&c>=0&&c<m&&vis[r][c]==-1)
-        setAns(r,c,mt,vis,cnt);
-    
-    r=i-1;
-    if(r>=0&&r<n&&c>=0&&c<m&&vis[r][c]==-1)
-        setAns(r,c,mt,vis,cnt);
-
-    r=i; c=j+1;
-    if(r>=0&&r<n&&c>=0&&c<m&&vis[r][c]==-1)
-        setAns(r,c,mt,vis,cnt);
-
-    c=j-1;
-    if(r>=0&&r<n&&c>=0&&c<m&&vis[r][c]==-1)
-        setAns(r,c,mt,vis,cnt);
-}
-void code(){
-    int n,m,q; cin>>n>>m>>q;
-    vector<vector<char>> mt(n,vector<char>(m));
-    f(i,0,n) cin>>mt[i];
-    vector<vector<int>> vis(n,vector<int>(m,0));
-    f(i,0,n){
-        f(j,0,m){
-            if(mt[i][j]=='.'&&vis[i][j]==0){
-                int cnt=0;
-                countP(i,j,mt,vis,cnt);
-                setAns(i,j,mt,vis,cnt);
-            }
+bool bfs(int i,vector<vector<int>>& adj,vector<int>& vis){
+    int n=adj.size();
+    queue<pair<int,int>> q;
+    vis[i]=1;
+    q.push({i,1});
+    while(!q.empty()){
+        int node=q.front().first;
+        int color=q.front().second;
+        q.pop();
+        for(auto it:adj[node]){
+            
+            int newcolor=0;
+            if(vis[it]==color) return false;
+            else if(vis[it]!=0) continue;
+            else if(color==1) newcolor=2;
+            else newcolor=1;
+            vis[it]=newcolor;
+            q.push({it,newcolor});
         }
     }
-    // int cnt=0;
-    // countP(1,1,mt,vis,cnt);
-    // f(i,0,n) cout<<vis[i]<<endl;
-    while(q--){
-        int x,y; cin>>x>>y;
-        x--; y--;
-        cout<<vis[x][y]<<endl;
+    return true;
+    
+}
+bool solve(vector<vector<int>>& adj,vector<int>& vis){
+    int n=adj.size();
+    queue<pair<int,int>> q;
+    for(int i=1;i<=n;i++){
+        if(vis[i]==0){
+            bool flag=bfs(i,adj,vis);
+            if(!flag) return false;
+        }
     }
+    return true;
+}
+void code(){
+    int n,m; cin>>n>>m;
+    vector<vector<int>> adj(n+1);
+    while(m--){
+        int a,b; cin>>a>>b;
+        adj[a].push_back(b);
+        adj[b].push_back(a);
+    }
+    vector<int> vis(n+1,0);
+    bool flag=solve(adj,vis);
+    if(!flag) cout<<"IMPOSSIBLE";
+    else{
+        for(int i=1;i<=n;i++){
+            if(vis[i]==0||vis[i]==1)  cout<<1;
+            else cout<<2;
+            cout<<" ";
+        }
+    }
+    
 
 }
 
