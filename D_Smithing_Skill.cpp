@@ -94,9 +94,43 @@ int power(int a,int b){
         temp*=a;
     return temp;
 }
-
+int solve(int t,vector<int>& cre,vector<int>& mel,vector<int>& diff ){
+    int n=cre.size();
+    int ans=0;
+    while(t>=cre[0]){
+        int in=upper_bound(cre.begin(),cre.end(),t)-cre.begin();
+        in--;
+        if(in==-1) return ans;
+        ans+=(t-mel[in])/diff[in];
+        t=mel[in]+(t-mel[in])%diff[in];
+    }
+    // cout<<ans<<endl;
+    return 2*ans;
+}
 void code(){
-    
+    int n,m; cin>>n>>m;
+    vector<pair<int,int>> w(n);
+    f(i,0,n) cin>>w[i].first;
+    f(i,0,n) cin>>w[i].second;
+
+    vi t(m); cin>>t;
+    sort(w.begin(),w.end());
+
+    vi cre(n);
+    f(i,0,n) cre[i]=w[i].first;
+    vi mel(n);
+    f(i,0,n) mel[i]=w[i].second;
+
+    vi diff(n);
+    f(i,0,n) diff[i]=w[i].first-w[i].second;
+    f(i,1,n) diff[i]=min(diff[i],diff[i-1]);
+
+    int ans=0;
+    f(i,0,m){
+        ans+=solve(t[i],cre,mel,diff);
+    }
+    cout<<ans;
+
 
 }
 
@@ -107,24 +141,10 @@ int32_t main(){
     //#endif
     adiwish
 
-    int l,b; cin>>l>>b;  
-    vvi dp(l+1,vector<int>(b+1,0));
-    fe(i,1,l) dp[i][1]=i-1;
-    fe(i,1,b) dp[1][i]=i-1;
-
-    fe(i,2,l){
-        fe(j,2,b){  
-            if(i==j) continue;
-            int ans=INT_MAX;
-            fe(k,1,i/2)
-                ans=min(ans,dp[k][j]+dp[i-k][j]+1);
-            fe(k,1,j/2)
-                ans=min(ans,dp[i][k]+dp[i][j-k]+1);
-            dp[i][j]=ans;
-        }
+    // int t; cin>>t;
+    // while(t--)
+    {
+        code();
+        cout<<endl;
     }
-    fe(i,0,l) cout<<dp[i]<<endl;
-    // cout<<l<<" "<<b<<endl;
-    // cout<<dp;
-    // cout<<dp[l][b];
 }

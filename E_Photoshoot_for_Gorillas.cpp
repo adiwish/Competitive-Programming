@@ -94,9 +94,45 @@ int power(int a,int b){
         temp*=a;
     return temp;
 }
-
+int solve(int n,int m,int i,int j,int k){
+    int up=i,down=n-1-i,left=j,right=m-1-j;
+    int x=max(k-1 - up,0LL)+max(k-1 - down,0LL);
+    // if(x>0&&k%2==0) x--;
+    int y=max(k-1 - left,0LL)+max(k-1 - right,0LL);
+    // if(y>0&&k%2==0) y--;
+    int ans=(k*k)-x*k;
+    k-=x;
+    ans-=y*k;
+    return ans;
+}
 void code(){
+    int n,m,k; cin>>n>>m>>k;
+    int w; cin>>w;
+    vi v(w); cin>>v;
+    vvi grid(n,vi(m,0));
+    f(i,0,n){
+        f(j,0,m){
+            grid[i][j]=solve(n,m,i,j,k);
+        }
+    }
+    vi cnt;
+    f(i,0,n){
+        f(j,0,m)
+            cnt.pb(grid[i][j]);
+    }
+    sort(cnt.rbegin(),cnt.rend());
+    sort(v.rbegin(),v.rend());
+    int ans=0;
+    for(int i=0;i<w;i++)
+        ans+=cnt[i]*v[i];
+    cout<<ans;
+
     
+    
+    
+    // f(i,0,n)
+    //     cout<<grid[i]<<endl;
+
 
 }
 
@@ -107,24 +143,10 @@ int32_t main(){
     //#endif
     adiwish
 
-    int l,b; cin>>l>>b;  
-    vvi dp(l+1,vector<int>(b+1,0));
-    fe(i,1,l) dp[i][1]=i-1;
-    fe(i,1,b) dp[1][i]=i-1;
-
-    fe(i,2,l){
-        fe(j,2,b){  
-            if(i==j) continue;
-            int ans=INT_MAX;
-            fe(k,1,i/2)
-                ans=min(ans,dp[k][j]+dp[i-k][j]+1);
-            fe(k,1,j/2)
-                ans=min(ans,dp[i][k]+dp[i][j-k]+1);
-            dp[i][j]=ans;
-        }
+    int t; cin>>t;
+    while(t--)
+    {
+        code();
+        cout<<endl;
     }
-    fe(i,0,l) cout<<dp[i]<<endl;
-    // cout<<l<<" "<<b<<endl;
-    // cout<<dp;
-    // cout<<dp[l][b];
 }

@@ -94,10 +94,54 @@ int power(int a,int b){
         temp*=a;
     return temp;
 }
+vector<int> ans;
+void makeroute(int node,stack<int>&st){
+    if(ans.size()>0) return;
+    ans.push_back(node);
+    st.pop();
+    while(st.size()!=0&&st.top()!=node){
+        ans.push_back(st.top());
+        st.pop();
+    }
+    ans.push_back(node);
+    return;
+}
+void dfs(int node,int par,vector<vector<int>>& adj,vector<int>& vis,stack<int>& st){ 
+    st.push(node);
+    if(vis[node]==1){
+        // cout<<node<<" ";
+        makeroute(node,st);
+        return;
+    }
+    // cout<<node<<" ";
+    vis[node]=1;
+    for(auto it:adj[node]){
+        if(it==par) continue;
+        dfs(it,node,adj,vis,st);
+    }
+    st.pop();
+    return;
 
+}
 void code(){
+    int n,m; cin>>n>>m;
+    vector<vector<int>> adj(n+1);
+    while(m--){
+        int a,b; cin>>a>>b;
+        adj[a].push_back(b);
+        adj[b].push_back(a);
+    }
+    vector<int> vis(n+1,0);
+    for(int i=1;i<=n;i++){
+        stack<int> st;
+        if(!vis[i]&&adj[i].size()!=0) dfs(i,-1,adj,vis,st);
+        if(ans.size()>0) break;
+    }
+    // cout<<vis<<endl;
+    if(ans.size()<=1) cout<<"IMPOSSIBLE";
+    else cout<<ans.size()<<endl<<ans;
     
-
+    // cout<<"hello";
 }
 
 int32_t main(){
@@ -107,24 +151,10 @@ int32_t main(){
     //#endif
     adiwish
 
-    int l,b; cin>>l>>b;  
-    vvi dp(l+1,vector<int>(b+1,0));
-    fe(i,1,l) dp[i][1]=i-1;
-    fe(i,1,b) dp[1][i]=i-1;
-
-    fe(i,2,l){
-        fe(j,2,b){  
-            if(i==j) continue;
-            int ans=INT_MAX;
-            fe(k,1,i/2)
-                ans=min(ans,dp[k][j]+dp[i-k][j]+1);
-            fe(k,1,j/2)
-                ans=min(ans,dp[i][k]+dp[i][j-k]+1);
-            dp[i][j]=ans;
-        }
+    // int t; cin>>t;
+    // while(t--)
+    {
+        code();
+        cout<<endl;
     }
-    fe(i,0,l) cout<<dp[i]<<endl;
-    // cout<<l<<" "<<b<<endl;
-    // cout<<dp;
-    // cout<<dp[l][b];
 }

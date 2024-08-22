@@ -95,36 +95,55 @@ int power(int a,int b){
     return temp;
 }
 
-void code(){
+struct TreeNode {
+    int value;
+    TreeNode *left, *right;
     
+    TreeNode(int val) : value(val), left(nullptr), right(nullptr) {}
+};
 
-}
-
-int32_t main(){
-    //#ifndef ONLINE_JUDGE
-        //freopen("input.txt", "r", stdin);
-        //freopen("output.txt", "w", stdout);
-    //#endif
-    adiwish
-
-    int l,b; cin>>l>>b;  
-    vvi dp(l+1,vector<int>(b+1,0));
-    fe(i,1,l) dp[i][1]=i-1;
-    fe(i,1,b) dp[1][i]=i-1;
-
-    fe(i,2,l){
-        fe(j,2,b){  
-            if(i==j) continue;
-            int ans=INT_MAX;
-            fe(k,1,i/2)
-                ans=min(ans,dp[k][j]+dp[i-k][j]+1);
-            fe(k,1,j/2)
-                ans=min(ans,dp[i][k]+dp[i][j-k]+1);
-            dp[i][j]=ans;
+int insert(TreeNode*& root, int val) {
+    if (!root) {
+        root = new TreeNode(val);
+        return 0; 
+    }
+    
+    TreeNode* node = root;
+    int d = 0;
+    
+    while (true) {
+        d++;
+        if (val < node->value) {
+            if (!node->left) {
+                node->left = new TreeNode(val);
+                break;
+            } else {
+                node = node->left;
+            }
+        } else {
+            if (!node->right) {
+                node->right = new TreeNode(val);
+                break;
+            } else {
+                node = node->right;
+            }
         }
     }
-    fe(i,0,l) cout<<dp[i]<<endl;
-    // cout<<l<<" "<<b<<endl;
-    // cout<<dp;
-    // cout<<dp[l][b];
+    
+    return d;
+}
+
+int32_t main() {
+    int n; cin >> n;
+    vi v(n); cin>>v;
+    
+    TreeNode* root = nullptr;
+    int ans= 0;
+    
+    f(i,0,n) {
+        int d = insert(root, v[i]);
+        ans += d;
+        cout << ans << endl;
+    }
+    return 0;
 }

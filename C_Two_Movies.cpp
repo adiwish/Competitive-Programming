@@ -96,7 +96,24 @@ int power(int a,int b){
 }
 
 void code(){
+    int n; cin>>n;
+    vi a(n),b(n); cin>>a>>b;
+    int f=0,s=0,bothpos=0,bothneg=0;
+    f(i,0,n){
+        if(a[i]==0&&b[i]==0) continue;
+        else if(a[i]==1&&b[i]==1) bothpos++;
+        else if(a[i]==-11&&b[i]==-11) bothneg++;
+        else if(a[i]==1) f++;
+        else s++;
+    }
+    int minm=min(f,s);
+    int maxm=max(f,s);
+    int diff=maxm-minm;
+    minm+=min(diff,bothpos);
+    bothpos=max(bothpos-diff,0LL);
+    bothneg=max(bothneg-bothpos,0LL); 
     
+
 
 }
 
@@ -107,24 +124,10 @@ int32_t main(){
     //#endif
     adiwish
 
-    int l,b; cin>>l>>b;  
-    vvi dp(l+1,vector<int>(b+1,0));
-    fe(i,1,l) dp[i][1]=i-1;
-    fe(i,1,b) dp[1][i]=i-1;
-
-    fe(i,2,l){
-        fe(j,2,b){  
-            if(i==j) continue;
-            int ans=INT_MAX;
-            fe(k,1,i/2)
-                ans=min(ans,dp[k][j]+dp[i-k][j]+1);
-            fe(k,1,j/2)
-                ans=min(ans,dp[i][k]+dp[i][j-k]+1);
-            dp[i][j]=ans;
-        }
+    int t; cin>>t;
+    while(t--)
+    {
+        code();
+        cout<<endl;
     }
-    fe(i,0,l) cout<<dp[i]<<endl;
-    // cout<<l<<" "<<b<<endl;
-    // cout<<dp;
-    // cout<<dp[l][b];
 }

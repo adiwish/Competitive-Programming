@@ -94,9 +94,63 @@ int power(int a,int b){
         temp*=a;
     return temp;
 }
+string findnode(int n,map<string,set<int>>& mp){
+    for(auto it=mp.begin();it!=mp.end();it++)
+        if(it->second.find(n)!=it->second.end()) 
+            return it->first;
+    cout<<"NO";
+    return "NO";
+}
+bool direct(string start, string end){
+    for(int i=0;i<2;i++)
+        for(int j=0;j<2;j++) 
+            if(start[i]==end[j]) return true;
+    return false;
+}
+int solve(int s,int e,map<string,set<int>>& mp){
+    string start=findnode(s,mp),end=findnode(e,mp);
+    if(direct(start,end)) return e-s;
 
-void code(){
+    int left=INT_MIN,right=INT_MAX;
     
+    for(auto it=mp.begin();it!=mp.end();it++){
+        if(it->first==start||it->first==end) continue;
+        auto tempR=it->second.upper_bound(s);
+
+        if(tempR!=it->second.end()){
+            int ele=*tempR;
+            if(ele<=e) return e-s;
+            right=min(right,ele);
+        }  
+        if(tempR!=it->second.begin()&&it->second.size()!=0){
+            tempR--;
+            left=max(left,*tempR);
+        }
+    }
+    if(left==INT_MIN&&right==INT_MAX) return -1;
+
+    int rightDis=(right-s)+(right-e);
+    int leftDis=(s-left)+(e-left);
+    int ans=min(rightDis,leftDis);
+    return ans;
+}
+void code(){
+    int n,q; cin>>n>>q;
+    map<string,set<int>> mp;
+    for(int i=1;i<=n;i++){
+        string s; cin>>s;
+        mp[s].insert(i);
+    }
+    // for(auto it:mp)
+    //     sort(vr(it.second));
+    while(q--){
+        int s,e; cin>>s>>e;
+        if(s>e) swap(s,e);
+        
+        int ans=solve(s,e,mp);
+        cout<<ans<<endl;
+    }
+    return;
 
 }
 
@@ -107,24 +161,10 @@ int32_t main(){
     //#endif
     adiwish
 
-    int l,b; cin>>l>>b;  
-    vvi dp(l+1,vector<int>(b+1,0));
-    fe(i,1,l) dp[i][1]=i-1;
-    fe(i,1,b) dp[1][i]=i-1;
-
-    fe(i,2,l){
-        fe(j,2,b){  
-            if(i==j) continue;
-            int ans=INT_MAX;
-            fe(k,1,i/2)
-                ans=min(ans,dp[k][j]+dp[i-k][j]+1);
-            fe(k,1,j/2)
-                ans=min(ans,dp[i][k]+dp[i][j-k]+1);
-            dp[i][j]=ans;
-        }
+    int t; cin>>t;
+    while(t--)
+    {
+        code();
+        // cout<<endl;
     }
-    fe(i,0,l) cout<<dp[i]<<endl;
-    // cout<<l<<" "<<b<<endl;
-    // cout<<dp;
-    // cout<<dp[l][b];
 }
